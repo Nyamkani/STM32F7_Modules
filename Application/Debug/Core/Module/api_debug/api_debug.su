@@ -1,0 +1,7 @@
+/opt/st/stm32cubeide_1.11.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/arm-none-eabi/include/c++/10.3.1/arm-none-eabi/thumb/v7e-m+fp/hard/bits/gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+../Core/Module/transmit_tools/../../Module/Util/CalcCRC.h:65:16:short unsigned int CalcCRC(unsigned char*, long unsigned int)	24	static
+../Core/Module/api_debug/api_debug.cpp:24:6:void vprint(const char*, va_list)	216	static
+../Core/Module/api_debug/api_debug.cpp:35:6:)	16	static
+../Core/Module/api_debug/api_debug.cpp:43:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	16	static
+../Core/Module/api_debug/api_debug.cpp:70:6:void Debug_Uart_Init()	8	static
+../Core/Module/api_debug/api_debug.cpp:90:6:void DebugDrive()	24	static

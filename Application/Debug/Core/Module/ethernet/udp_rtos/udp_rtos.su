@@ -1,0 +1,5 @@
+../Core/Module/ethernet/udp_rtos/udp_rtos.cpp:26:13:void UDPServerThread(void*)	32	static
+../Core/Module/ethernet/udp_rtos/udp_rtos.cpp:84:6:void UdpServerInit()	16	static
+../Core/Module/ethernet/udp_rtos/udp_rtos.cpp:93:6:void udpsend(char*)	24	static
+../Core/Module/ethernet/udp_rtos/udp_rtos.cpp:103:13:void UdpClientThread(void*)	24	static
+../Core/Module/ethernet/udp_rtos/udp_rtos.cpp:162:6:void UdpClientInit()	16	static
