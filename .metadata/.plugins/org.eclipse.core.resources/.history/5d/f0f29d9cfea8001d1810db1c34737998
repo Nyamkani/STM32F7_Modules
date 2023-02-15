@@ -1,0 +1,5 @@
+Core/module/mcx514/src/mcx514.o: ../Core/module/mcx514/src/mcx514.cpp \
+ ../Core/module/mcx514/src/../../../module/mcx514/include/mcx514/mcx514.h \
+ ../Core/module/mcx514/src/../../../module/mcx514/include/mcx514/../../../../module/mcx514/include/mcx514/mcx514_define.h
+../Core/module/mcx514/src/../../../module/mcx514/include/mcx514/mcx514.h:
+../Core/module/mcx514/src/../../../module/mcx514/include/mcx514/../../../../module/mcx514/include/mcx514/mcx514_define.h:

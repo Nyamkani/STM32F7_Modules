@@ -1,0 +1,3 @@
+Core/Module/mcx514/mcx514.o: ../Core/Module/mcx514/mcx514.cpp \
+ ../Core/Module/mcx514/mcx514.h
+../Core/Module/mcx514/mcx514.h:

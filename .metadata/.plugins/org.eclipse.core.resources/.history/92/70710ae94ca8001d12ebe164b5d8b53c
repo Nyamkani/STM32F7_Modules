@@ -1,0 +1,17 @@
+/*
+ * mcx514.h
+ *
+ *  Created on: Feb 9, 2023
+ *      Author: studio3s
+ */
+
+#ifndef MODULE_MCX514_MCX514_H_
+#define MODULE_MCX514_MCX514_H_
+
+class mcx514 {
+public:
+	mcx514();
+	virtual ~mcx514();
+};
+
+#endif /* MODULE_MCX514_MCX514_H_ */

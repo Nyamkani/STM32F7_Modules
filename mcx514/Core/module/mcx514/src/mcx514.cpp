@@ -1,0 +1,444 @@
+/*
+ * mcx514.cpp
+ *
+ *  Created on: Feb 9, 2023
+ *      Author: studio3s
+ */
+
+#include "mcx514/include/mcx514/mcx514.h"
+
+//-----------------------------------------------------------------------Constructor functions
+MCX514::MCX514()
+{
+	// TODO Auto-generated constructor stub
+	this->axis_ = mcx514_axis_define::x_axis;
+
+}
+
+MCX514::MCX514(uint8_t axis)
+{
+	// TODO Auto-generated constructor stub
+	//if(axis >= 4) this->error_code = initfailed
+
+	this->axis_ = axis;
+}
+
+MCX514::MCX514(uint8_t axis, SRAM_HandleTypeDef* hsram)
+{
+	// TODO Auto-generated constructor stub
+	//if(axis >= 4) this->error_code = initfailed
+
+	this->axis_ = axis;
+
+	this->hsram_ = hsram;
+}
+
+
+MCX514::MCX514(uint8_t axis, SRAM_HandleTypeDef* hsram, uint32_t reg_address)
+{
+	// TODO Auto-generated constructor stub
+	//if(axis >= 4) this->error_code = initfailed
+
+	this->axis_ = axis;
+
+	this->hsram_ = hsram;
+
+	this->reg_address_ = reg_address;
+}
+
+MCX514::~MCX514()
+{
+	// TODO Auto-generated destructor stub
+}
+
+//-----------------------------------------------------------------------FMC Write and read function
+int MCX514::WriteReg(uint32_t Adr, unsigned short Data)
+{
+	unsigned short data_ = Data;
+
+	 uint32_t *write_address = (uint32_t* )Adr;
+
+	return HAL_SRAM_Write_16b((this->hsram_), write_address, &data_, sizeof(data_));
+}
+
+int MCX514::ReadReg(volatile unsigned short *Adr, unsigned short *Data)
+{
+	return HAL_SRAM_Read_16b((this->hsram_), (uint32_t*)Adr, Data, sizeof(Data));
+}
+
+// Common function of commands for writing data
+// Data can be written by writing data into WR6, WR7, and then writing a command into WR0.
+int MCX514::SetData(unsigned short Cmd, unsigned long Data)
+{
+	unsigned long mask_data = 0x0000ffff;
+	unsigned short write_data;
+
+	// Writes the lower 16-bit of data into WR6
+	write_data = (unsigned short )(Data & mask_data);
+	WriteReg6(write_data);
+
+	// Writes the upper 16-bit of data into WR7
+	write_data = (unsigned short )(Data >> 16);;
+	WriteReg7(write_data);
+
+	// Writes a command (into WR0)
+	WriteReg0((unsigned short) (this->axis_ << 8) | Cmd);
+
+	return 0;
+}
+
+int MCX514::SetData(unsigned short Cmd, int Axis, unsigned long Data)
+{
+	unsigned long mask_data = 0x0000ffff;
+	unsigned short write_data;
+
+	// Writes the lower 16-bit of data into WR6
+	write_data = (unsigned short )(Data & mask_data);
+	WriteReg6(write_data);
+
+	// Writes the upper 16-bit of data into WR7
+	write_data = (unsigned short )(Data >> 16);;
+	WriteReg7(write_data);
+
+	// Writes a command (into WR0)
+	WriteReg0((unsigned short) (Axis << 8) | Cmd);
+
+	return 0;
+}
+
+
+// Common function of commands for writing mode
+// Data can be written by writing data into WR6, and then writing a command into WR0.
+int MCX514::SetModeData(unsigned short Cmd, unsigned short Data)
+{
+	// Writes the lower 16-bit of data into WR6
+	WriteReg6(Data);
+
+	// Writes a command (into WR0)
+	WriteReg0(((unsigned short) (this->axis_ << 8) | Cmd));
+
+	return 0;
+}
+
+int MCX514::SetModeData(unsigned short Cmd, int Axis, unsigned short Data)
+{
+	// Writes the lower 16-bit of data into WR6
+	WriteReg6(Data);
+
+	// Writes a command (into WR0)
+	WriteReg0(((unsigned short) (Axis << 8) | Cmd));
+
+	return 0;
+}
+
+// Common function of commands for reading data
+// Data can be read by writing a command into WR0, and then read  RR6, RR7.
+int MCX514::GetData(unsigned short Cmd, unsigned long *Data)
+{
+	unsigned short rdata1,rdata2;
+	unsigned long retdata = 0x00000000;
+
+	if (Data == NULL) return 0;
+
+	// Writes a command (into WR0)
+	WriteReg0(((unsigned short) (this->axis_ << 8) | Cmd));
+
+	// Reads RR7
+	ReadReg7(&rdata1);
+
+	// Reads RR6
+	ReadReg6(&rdata2);
+
+	// Create data for reading
+	retdata = (unsigned long )rdata1;	// Sets RR7 value to the upper 16-bit
+	*Data = (retdata << 16);
+	retdata = (unsigned long )rdata2;	// Sets RR6 value to the lower 16-bit
+	*Data = *Data | retdata;
+
+	return 0;
+}
+
+int MCX514::GetData(unsigned short Cmd, int Axis, unsigned long *Data)
+{
+	unsigned short rdata1,rdata2;
+	unsigned long retdata = 0x00000000;
+
+	if (Data == NULL) return 0;
+
+	// Writes a command (into WR0)
+	WriteReg0(((unsigned short) (Axis << 8) | Cmd));
+
+	// Reads RR7
+	ReadReg7(&rdata1);
+
+	// Reads RR6
+	ReadReg6(&rdata2);
+
+	// Create data for reading
+	retdata = (unsigned long )rdata1;	// Sets RR7 value to the upper 16-bit
+	*Data = (retdata << 16);
+	retdata = (unsigned long )rdata2;	// Sets RR6 value to the lower 16-bit
+	*Data = *Data | retdata;
+
+	return 0;
+}
+// Common function of command execution
+int MCX514::ExeCmd(unsigned short Cmd)
+{
+	// Writes a command (into WR0)
+	WriteReg0(((unsigned short) (this->axis_ << 8) | Cmd));
+
+	return 0;
+}
+
+int MCX514::ExeCmd(unsigned short Cmd, int Axis)
+{
+	// Writes a command (into WR0)
+	WriteReg0(((unsigned short) Axis | Cmd));
+
+	return 0;
+}
+
+// Waiting for termination of driving
+void MCX514::WaitDrive()
+{
+	unsigned short rrData;
+
+	// Reads RR0
+	ReadReg0(&rrData);
+
+	while ((rrData & (this->axis_)))     // If during the driving
+	{
+		ReadReg0(&rrData);		// Reads RR0
+	}
+}
+
+// Waiting for termination of split pulse
+
+void MCX514::WaitSplit()
+{
+	unsigned short rrData;
+
+	ReadReg3(1,&rrData);		// Reads RR3 Page1
+	while ((rrData & 0x0800)) {		// If split pulse is in operation
+		ReadReg3(1, &rrData);	// Reads RR3 Page1
+	}
+}
+
+
+
+//-----------------------------------------------------------------------send or read function
+uint16_t MCX514::WriteRequest()
+{
+	mcx514_data_struct temp_send_data = RequestQueue.front();
+
+	int status = HAL_OK;
+	int queue_type = temp_send_data.request_type;
+	unsigned short command_ = temp_send_data.command;
+	uint32_t data_ =  temp_send_data.data;
+	unsigned long read_data_;
+
+	switch(queue_type)
+	{
+		case set_data_req_1:
+			status = SetData(command_, data_);
+
+			break;
+
+		case set_data_req_2:
+			status = SetModeData(command_, MCX514_AXIS_NONE, data_);
+
+			break;
+
+		case set_mode_data_req_1:
+			status = SetModeData(command_, data_);
+
+			break;
+
+		case set_mode_data_req_2:
+			status = SetModeData(command_, MCX514_AXIS_NONE, data_);
+
+			break;
+
+		case get_data_req_1:
+			status = GetData(command_, &read_data_);
+
+			this->read_data_ = read_data_;
+
+			break;
+
+		case get_data_req_2:
+			status = GetData(command_, MCX514_AXIS_NONE, &read_data_);
+
+			this->read_data_ = read_data_;
+
+			break;
+
+		case exe_cmd_req_1:
+			status = ExeCmd(command_);
+
+			break;
+
+		case exe_cmd_req_2:
+			status = ExeCmd(command_, MCX514_AXIS_NONE);
+
+			break;
+
+		case wait_drive_req:
+			WaitDrive();
+
+			break;
+
+
+		case wait_split_req:
+			WaitSplit();
+
+			break;
+
+		default: break;
+	}
+
+	return status;
+}
+
+
+
+//-----------------------------------------------------------------------Queue functions
+
+int MCX514::SelectSendQueueType()
+{
+	int queue_type;
+
+	if(!(IsAsyncRequestQueueEmpty())) {queue_type = async;}
+
+	else if(!(IsRequestQueueEmpty())) {queue_type = sync;}
+
+	this->send_queue_type_ = queue_type;
+
+	return this->send_queue_type_;
+}
+
+mcx514_data_struct MCX514::SelectSendQueueData(int type)
+{
+	int type_ = type;
+	mcx514_data_struct Write_Command_Data = {0,};
+
+	switch(type_)
+	{
+		case async: Write_Command_Data = AsyncRequestQueue.front(); break;
+
+		case sync:  Write_Command_Data = RequestQueue.front(); break;
+	}
+
+	return Write_Command_Data;
+}
+
+void MCX514::AsyncQueueSaveRequest(mcx514_data_struct cmd)
+{
+	if(this->is_run_) this->AsyncRequestQueue.push_back(cmd);
+
+	return;
+}
+
+void MCX514::QueueSaveRequest(mcx514_data_struct cmd){this->RequestQueue.push_back(cmd);}
+
+void MCX514::QueueDeleteRequest()
+{
+	int queue_type = this->send_queue_type_;
+
+	switch(queue_type)
+	{
+		case async: this->AsyncRequestQueue.erase(AsyncRequestQueue.begin()); break;
+
+		case sync: this->RequestQueue.erase(RequestQueue.begin()); break;
+	}
+
+	return ;
+}
+
+bool MCX514::IsAsyncRequestQueueEmpty() {return AsyncRequestQueue.empty();}
+
+bool MCX514::IsRequestQueueEmpty() {return RequestQueue.empty();}
+
+
+
+//-----------------------------------------------------------------------Process functions
+
+bool MCX514::CheckProcess()
+{
+	if(!(this->is_init_)) return false;
+
+	if(IsRequestQueueEmpty()) return false;
+
+	return true;
+}
+
+void MCX514::InitProcess()
+{
+	this->read_data_ = 0;
+
+	return;
+}
+
+void MCX514::SendProcess()
+{
+	WriteRequest();
+
+	return;
+}
+
+void MCX514::RecvProcess()
+
+{
+
+	return;
+}
+
+void MCX514::PostProcess()
+{
+	this->RequestQueue.erase(RequestQueue.begin());
+
+	return;
+}
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------Main Drive functions
+
+void MCX514::Initialization()
+{
+	this->is_init_ = true;
+
+	TESTDRIVEENQEUE();
+
+	return;
+}
+
+void MCX514::DeInitialization()
+{
+
+
+	return;
+}
+
+
+
+void MCX514::Drive()
+{
+	if(!(CheckProcess())) return;
+
+	InitProcess();
+
+	SendProcess();
+
+	RecvProcess();
+
+	PostProcess();
+
+	return;
+}
+

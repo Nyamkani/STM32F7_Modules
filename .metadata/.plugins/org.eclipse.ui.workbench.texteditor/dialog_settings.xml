@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="wrap" value="false"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<item key="selection" value="  Timing.AddressSetupTime = 5;&#x0D;&#x0A;  Timing.AddressHoldTime = 15;&#x0D;&#x0A;  Timing.DataSetupTime = 4;&#x0D;&#x0A;  Timing.BusTurnAroundDuration = 4;&#x0D;&#x0A;  Timing.CLKDivision = 16;&#x0D;&#x0A;  Timing.DataLatency = 17;&#x0D;&#x0A;  Timing.AccessMode = FMC_ACCESS_MODE_A;"/>
+		<list key="findhistory">
+			<item value="  Timing.AddressSetupTime = 5;"/>
+			<item value="ExeSRST"/>
+			<item value="MCX514_CMDFF_RST"/>
+			<item value="MCX514_WR0"/>
+			<item value="MCX514_CMD52_DRVVP"/>
+			<item value="HAL_SRAM_MspInit"/>
+			<item value="stop"/>
+			<item value="int"/>
+		</list>
+		<list key="replacehistory">
+			<item value="void"/>
+			<item value="MCX514"/>
+			<item value=""/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="926"/>
+		<item key="DIALOG_Y_ORIGIN" value="247"/>
+		<item key="DIALOG_WIDTH" value="408"/>
+		<item key="DIALOG_HEIGHT" value="444"/>
+		<item key="DIALOG_FONT_NAME" value="1|Cantarell|11.0|0|GTK|1|"/>
+	</section>
+</section>

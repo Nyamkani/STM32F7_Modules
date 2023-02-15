@@ -1,0 +1,1083 @@
+/*
+ * mcx514_command.cpp
+ *
+ *  Created on: Feb 14, 2023
+ *      Author: studio3s
+ */
+
+
+
+
+#include "mcx514/include/mcx514/mcx514.h"
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Write functions for WR register
+//////////////////////////////////////////////////////////////////////////////////////
+
+int MCX514::WriteReg0(unsigned short Data){ 				// Writes into WR0 register
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR0), Data));
+}
+int MCX514::WriteReg1(unsigned short Data){ 			// Writes into WR1 register
+	WriteReg0(((this->axis_ << 8) + MCX514_CMD1F_NOP));		// Axis assignment
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR1), Data));
+}
+
+int MCX514::WriteReg2(unsigned short Data){ 			// Writes into WR2 register
+	WriteReg0(((this->axis_ << 8) + MCX514_CMD1F_NOP));		// Axis assignment
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR2), Data));
+}
+
+int MCX514::WriteReg3(unsigned short Data){ 			// Writes into WR3 register
+	WriteReg0(((this->axis_ << 8) + MCX514_CMD1F_NOP));		// Axis assignment
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR3), Data));
+}
+
+int MCX514::WriteReg4(unsigned short Data){ 				// Writes into WR4 register
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR4), Data));
+}
+
+int MCX514::WriteReg5(unsigned short Data){ 				// Writes into WR5 register
+return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR5), Data));
+}
+
+int MCX514::WriteReg6(unsigned short Data){ 				// Writes into WR6 register
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR6), Data));
+}
+
+int MCX514::WriteReg7(unsigned short Data){ 				// Writes into WR7 register
+	return(WriteReg((volatile unsigned short*)((this->reg_address_) + MCX514_WR7), Data));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Read functions for RR register
+///////////////////////////////////////////////////////////////////////////////////////
+
+int MCX514::ReadReg0(unsigned short *Data){ 				// Reads out RR0 register
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR0), Data));
+}
+int MCX514::ReadReg1(unsigned short *Data){ 			// Reads out RR1 register
+	WriteReg0(((this->axis_ << 8) + MCX514_CMD1F_NOP));		// Axis assignment
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR1), Data));
+}
+int MCX514::ReadReg2(unsigned short *Data){ 			// Reads out RR2 register
+	WriteReg0(((this->axis_ << 8) + MCX514_CMD1F_NOP));		// Axis assignment
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR2), Data));
+}
+int MCX514::ReadReg3(int Page, unsigned short *Data){ 		// Reads out RR3 register
+	if (Page == 0) {					// Specifies Page0
+		WriteReg0(((unsigned short)(this->axis_ << 8) | MCX514_CMD7A_RR3P0));
+	}
+	else {						// Specifies Page1
+		WriteReg0(((unsigned short)(this->axis_ << 8) | MCX514_CMD7B_RR3P1));
+	}
+	WriteReg0(((unsigned short)(this->axis_ << 8) | MCX514_CMD1F_NOP));	// Axis assignment
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR3), Data));
+}
+int MCX514::ReadReg4(unsigned short *Data){ 				// Reads out RR4 register
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR4), Data));
+}
+int MCX514::ReadReg5(unsigned short *Data){ 				// Reads out RR5 register
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR5), Data));
+}
+int MCX514::ReadReg6(unsigned short *Data){ 				// Reads out RR6 register
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR6), Data));
+}
+int MCX514::ReadReg7(unsigned short *Data){ 				// Reads out RR7 register
+	return(ReadReg((volatile unsigned short*)((this->reg_address_) + MCX514_RR7), Data));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Functions of commands for writing data
+///////////////////////////////////////////////////////////////////////////////////////
+void MCX514::SetStartSpd(long Data)	// Initial speed setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD04_SV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+void MCX514::SetSpeed(long Data)     // Drive speed setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD05_DV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetJerk(long Data)	    // Jerk setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD00_JK, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetDJerk(long Data)		// Deceleration increasing rate setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD01_DJ, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetAcc(long Data)		// Acceleration setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD02_AC, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetDec(long Data)	        // Deceleration setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD03_DC, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetPulse(long Data)	    // Drive pulse number / Finish point setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD06_TP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetLp(long Data)	// Logical position counter setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD09_LP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+void MCX514::SetRp(long Data)	// Real position counter setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD0A_RP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+void MCX514::SetCompP(long Data)  // Software limit + setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD0B_SP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetCompM(long Data)  // Software limit − setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD0C_SM, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetAccOfst(long Data)	// Acceleration counter offsetting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD0D_AO, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetHomeSpd(long Data)	// Home search speed setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD14_HV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetLpMax(long Data)	// Logical position counter maximum value setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD0E_LX, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetRpMax(long Data) 	// Real position counter maximum value setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD0F_RX, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetMR0(long Data)	// Multi-purpose register 0 setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD10_MR0, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetMR1(long Data)	// Multi-purpose register 1 setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD11_MR1, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetMR2(long Data)	// Multi-purpose register 2 setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD12_MR2, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetMR3(long Data)	// Multi-purpose register 3 setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD13_MR3, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetSpeedInc(long Data)	// Speed increasing / decreasing value setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD15_IV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetTimer(long Data)			// Timer value setting
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD16_TM, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetSplit1(unsigned short Data1, unsigned short Data2)  // Split pulse setting 1
+{
+	unsigned long Data;
+
+	Data = (((unsigned long)Data1 << 16) |  (unsigned long)Data2);
+
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD17_SP1, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetSplit2(unsigned long Data)			// Split pulse setting 2
+{
+	mcx514_data_struct queue_data = {set_data_req_1, MCX514_CMD18_SP2, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetTPMax(long Data)			// Interpolation / Finish point maximum value setting
+{
+	mcx514_data_struct queue_data = {set_data_req_2, MCX514_CMD39_TX, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetHLNumber(unsigned short Data)				// Helical rotation number setting
+{
+	mcx514_data_struct queue_data = {set_data_req_2, MCX514_CMD3A_CHLN, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetHLValue(long Data)				// Helical calculation value  setting
+{
+	mcx514_data_struct queue_data = {set_data_req_2, MCX514_CMD3B_HLV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Functions of commands for writing mode
+///////////////////////////////////////////////////////////////////////////////////////
+
+void MCX514::SetModeMRm(unsigned short Data)	            // Multi-purpose register mode setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD20_MRM, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModePIO1(unsigned short Data)	// PIO signal setting 1
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD21_P1M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModePIO2(unsigned short Data)			// PIO signal setting 2・Other settings
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD22_P2M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeHMSrch1(unsigned short Data) 		// Automatic home search mode setting 1
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD23_H1M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeHMSrch2(unsigned short Data)	// Automatic home search mode setting 2
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD24_H2M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeFilter(unsigned short Data)			// Input signal filter mode setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD25_FLM, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeSync0(unsigned short Data)			// Synchronous action SYNC0 setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD26_S0M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeSync1(unsigned short Data)			// Synchronous action SYNC1 setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD27_S1M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeSync2(unsigned short Data)			// Synchronous action SYNC2 setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD28_S2M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeSync3(unsigned short Data)			// Synchronous action SYNC3 setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_1, MCX514_CMD29_S3M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::SetModeIPM(unsigned short Data)			// Interpolation mode setting
+{
+	mcx514_data_struct queue_data = {set_mode_data_req_2, MCX514_CMD2A_IPM, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Functions of commands for reading data
+///////////////////////////////////////////////////////////////////////////////////////
+
+void MCX514::GetLp(long *Data)				// Logical position counter reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD30_LP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+void MCX514::GetRp(unsigned long *Data)		// Real position counter reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD31_RP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetCV(unsigned long *Data) 			// Current drive speed reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD32_CV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetCA(unsigned long *Data)			// Current acceleration/deceleration reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD33_CA, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetCT(unsigned long *Data)        // Current timer value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD38_CT, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetMR0(unsigned long *Data)		// Multi-purpose register 0 reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD34_MR0, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetMR1(unsigned long *Data)			// Multi-purpose register 1 reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD35_MR1, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetMR2(unsigned long *Data)			// Multi-purpose register 2 reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD36_MR2, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetMR3(unsigned long *Data)			// Multi-purpose register 3 reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD37_MR3, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetTX(unsigned long *Data)				// Interpolation/Finish point maximum value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_2, MCX514_CMD39_TX, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+void MCX514::GetCHLN(unsigned long *Data)				// Current helical rotation number reading
+{
+	mcx514_data_struct queue_data = {get_data_req_2, MCX514_CMD3A_CHLN, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetHLV(unsigned long *Data)				// Helical calculation value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_2, MCX514_CMD3B_HLV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetWR1(unsigned long *Data)			// WR1 setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD3D_WR1, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+void MCX514::GetWR2(unsigned long *Data)			// WR2 setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD3E_WR2, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetWR3(unsigned long *Data)			// WR3 setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD3F_WR3, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetMRM(unsigned long *Data)			// Multi-purpose register mode setting reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD40_MRM, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetP1M(unsigned long *Data)			// PIO signal setting 1 reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD41_P1M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetP2M(unsigned long *Data)			// PIO signal setting 2・Other settings reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD42_P2M, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetAc(unsigned long *Data )			// Acceleration setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD43_AC, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetStartSpd(unsigned long *Data )			// Initial speed setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD44_SV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetSpeed(unsigned long *Data )			// Drive speed setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD45_DV, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetPulse(unsigned long *Data )			// Drive pulse number/Finish point setting value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD46_TP, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+
+void MCX514::GetSplit(unsigned long *Data )			// Split pulse setting 1 reading
+{
+	mcx514_data_struct queue_data = {get_data_req_1, MCX514_CMD47_SP1, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::GetUI(unsigned long *Data )				// General purpose input value reading
+{
+	mcx514_data_struct queue_data = {get_data_req_2, MCX514_CMD48_UI, (uint32_t)Data};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Driving command functions
+///////////////////////////////////////////////////////////////////////////////////////
+void MCX514::ExeDRVRL() 					// Relative position driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD50_DRVRL};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDRVNR() 					// Counter relative position driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD51_DRVNR};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDRVVP()					// + Direction continuous pulse driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD52_DRVVP};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDRVVM()					// − Direction continuous pulse driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD53_DRVVM};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDRVAB()					// Absolute position driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD54_DRVAB};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDRVSBRK() 					// Decelerating stop
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD56_DRVSBRK};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDRVFBRK() 					// Instant stop
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD57_DRVFBRK};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDIRCP() 					// Direction signal + setting
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD58_DIRCP};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDIRCM() 					// Direction signal − setting
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD59_DIRCM};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeHMSRC() 					// Automatic home search execution
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD5A_HMSRC};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Interpolation command functions
+///////////////////////////////////////////////////////////////////////////////////////
+void MCX514::ExeLHK1() 						// 1-axis linear interpolation driving (multichip)
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD60_LHK1};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeLHK2() 						// 2-axis linear interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD61_LHK2};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeLHK3() 						// 3-axis linear interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD62_LHK3};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeLHK4() 						// 4-axis linear interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD63_LHK4};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeCHKCW() 					// CW circular interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD64_CHKCW};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeCHKCCW()					// CCW circular interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD65_CHKCCW};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeBHK2() 						// 2-axis bit pattern interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD66_BHK2};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeBHK3() 						// 3-axis bit pattern interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD67_BHK3};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeBHK4() 						// 4-axis bit pattern interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD68_BHK4};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeHLCW() 						// CW helical interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD69_HLCW};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeHLCCW() 					// CCW helical interpolation driving
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD6A_HLCCW};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeHLPCW() 					// CW helical calculation
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD6B_HLPCW};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeHLPCCW() 					// CCW helical calculation
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD6C_HLPCCW};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDECEN()	 					// Deceleration enabling
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD6D_DECEN};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDECDIS()	 				// Deceleration disabling
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD6E_DECDIS};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeCLRSTEP()	 			// Interpolation interrupt clear / Single-step interpolation
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_2, MCX514_CMD6F_CLRSTEP};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Synchronous action operation command function
+///////////////////////////////////////////////////////////////////////////////////////
+void MCX514::ExeSYNC(unsigned short Cmd)			// Command related to synchronous action
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, Cmd};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Other Commands functions
+///////////////////////////////////////////////////////////////////////////////////////
+void MCX514::ExeVINC() 					// Speed increase
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD70_VINC};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeVDEC() 					// Speed decrease
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD71_VDEC};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDCC() 					// Deviation counter clear output
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD72_DCC};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeTMSTA() 					// Timer-start
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD73_TMSTA};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeTMSTP() 					// Timer-stop
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD74_TMSTP};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeSPSTA() 					// Split pulse start
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD75_SPSTA};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeSPSTP() 					// Split pulse stop
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD76_SPSTP};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+void MCX514::ExeDHOLD() 					// Drive start holding
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD77_DHOLD};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeDFREE() 					// Drive start holding release
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD78_DFREE};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeR2CLR() 					// Error / Finishing status clear
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD79_R2CLR};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeRR3P0()					// RR3 Page0 display
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD7A_RR3P0};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeRR3P1() 					// RR3 Page1 display
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD7B_RR3P1};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeNOP() 					// NOP
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_CMD1F_NOP};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+void MCX514::ExeSRST() 						// Command reset
+{
+	mcx514_data_struct queue_data = {exe_cmd_req_1, MCX514_AXIS_NONE};
+
+	QueueSaveRequest(queue_data);
+
+	return;
+}
+
+
+
+void MCX514::TESTDRIVEENQEUE()
+{
+	 ExeSRST(); // Command reset
+
+	 SetStartSpd(10); // Initial speed 10pps
+	 SetSpeed(2000); // Drive speed 2Kpps
+	 SetAcc(100000); // Acceleration (maximum in specification)
+	 SetJerk(1000000); // Jerk 49750pps/sec2
+	 SetPulse(50000); // Drive pulse number 70000
+	 SetLp(0); // Logical position counter Clear
+	 WriteReg3(0x0004); // Specifies S-curve acceleration/deceleration driving
+	 ExeDRVRL(); // Relative position driving
+	 //WaitDrive(); // Waiting for termination of driving
+	 ExeDRVSBRK();
+	 SetSpeed(0);
+
+	 return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

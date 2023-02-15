@@ -1,0 +1,17 @@
+14:15:20 **** Incremental Build of configuration Debug for project mcx514 ****
+make -j4 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F746xx -c -I../Core/Inc -I"/home/studio3s/STM32CubeIDE/workspace_1.11.0/STM32F7_Modules/mcx514/Core/module" -I../Drivers/STM32F7xx_HAL_Driver/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "mcx514.elf" @"objects.list"   -mcpu=cortex-m7 -T"/home/studio3s/STM32CubeIDE/workspace_1.11.0/STM32F7_Modules/mcx514/STM32F746ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="mcx514.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: mcx514.elf
+ 
+arm-none-eabi-size   mcx514.elf 
+arm-none-eabi-objdump -h -S  mcx514.elf  > "mcx514.list"
+   text	   data	    bss	    dec	    hex	filename
+ 185976	    776	  31332	 218084	  353e4	mcx514.elf
+Finished building: default.size.stdout
+ 
+Finished building: mcx514.list
+ 
+
+14:15:23 Build Finished. 0 errors, 0 warnings. (took 3s.215ms)
+

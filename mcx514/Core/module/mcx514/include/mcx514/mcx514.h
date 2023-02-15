@@ -1,0 +1,274 @@
+/*
+ * mcx514.h
+ *
+ *  Created on: Feb 9, 2023
+ *      Author: studio3s
+ */
+
+#ifndef MODULE_MCX514_MCX514_H_
+#define MODULE_MCX514_MCX514_H_
+
+#include "stm32f7xx_hal.h"
+#include <vector>
+#include <iostream>
+#include <array>
+
+#include <mcx514/include/mcx514/mcx514_define.h>
+
+
+
+
+class MCX514
+{
+
+	//FUNCTIONS
+	public:
+		//-----------------------------------------------------------------------Constructor functions
+		MCX514();
+		MCX514(uint8_t axis);
+		MCX514(uint8_t axis, SRAM_HandleTypeDef* hsram);
+		MCX514(uint8_t axis, SRAM_HandleTypeDef* hsram, uint32_t reg_address);
+		virtual ~MCX514();
+
+		//-----------------------------------------------------------------------Main Drive functions
+		void Drive();
+		void Initialization();
+		void DeInitialization();
+
+		void TESTDRIVEENQEUE();
+		//-----------------------------------------------------------------------Command
+
+
+
+
+
+	private:
+		//-----------------------------------------------------------------------FMC Write and read function
+		int WriteReg(uint32_t Adr, unsigned short Data);
+
+		int ReadReg(volatile unsigned short *Adr, unsigned short *Data);
+
+		int SetData(unsigned short Cmd, unsigned long Data);
+
+		int SetData(unsigned short Cmd, int Axis, unsigned long Data);
+
+		int SetModeData(unsigned short Cmd, unsigned short Data);
+
+		int SetModeData(unsigned short Cmd, int Axis, unsigned short Data);
+
+		int GetData(unsigned short Cmd, unsigned long *Data);
+
+		int GetData(unsigned short Cmd, int Axis, unsigned long *Data);
+
+		int ExeCmd(unsigned short Cmd);
+
+		int ExeCmd(unsigned short Cmd, int Axis);
+
+		void WaitDrive();
+
+		void WaitSplit();
+
+		// Write functions for WR register
+		int WriteReg0(unsigned short Data);
+		int WriteReg1(unsigned short Data);
+		int WriteReg2(unsigned short Data);
+		int WriteReg3(unsigned short Data);
+		int WriteReg4(unsigned short Data);
+		int WriteReg5(unsigned short Data);
+		int WriteReg6(unsigned short Data);
+		int WriteReg7(unsigned short Data);
+
+		// Read functions for RR register
+		int ReadReg0(unsigned short *Data);
+		int ReadReg1(unsigned short *Data);
+		int ReadReg2(unsigned short *Data);
+		int ReadReg3(int Page, unsigned short *Data);
+		int ReadReg4(unsigned short *Data);
+		int ReadReg5(unsigned short *Data);
+		int ReadReg6(unsigned short *Data);
+		int ReadReg7(unsigned short *Data);
+
+		// Functions of commands for writing data
+		void SetStartSpd(long Data);
+		void SetSpeed(long Data);
+		void SetJerk(long Data);
+		void SetDJerk(long Data);
+		void SetAcc(long Data);
+		void SetDec(long Data);
+		void SetPulse(long Data);
+		void SetDecP(long Data);
+		void SetLp(long Data);
+		void SetRp(long Data);
+		void SetCompP(long Data);
+		void SetCompM(long Data);
+		void SetAccOfst(long Data);
+		void SetHomeSpd(long Data);
+		void SetLpMax(long Data);
+		void SetRpMax(long Data);
+		void SetMR0(long Data);
+		void SetMR1(long Data);
+		void SetMR2(long Data);
+		void SetMR3(long Data);
+		void SetSpeedInc(long Data);
+		void SetTimer(long Data);
+		void SetSplit1(unsigned short Data1, unsigned short Data2);
+		void SetSplit2(unsigned long Data);
+		void SetTPMax(long Data);
+		void SetHLNumber(unsigned short Data);
+		void SetHLValue(long Data);
+
+		// Functions of commands for writing mode
+		void SetModeMRm(unsigned short Data);
+		void SetModePIO1(unsigned short Data);
+		void SetModePIO2(unsigned short Data);
+		void SetModeHMSrch1(unsigned short Data);
+		void SetModeHMSrch2(unsigned short Data);
+		void SetModeFilter(unsigned short Data);
+		void SetModeSync0(unsigned short Data);
+		void SetModeSync1(unsigned short Data);
+		void SetModeSync2(unsigned short Data);
+		void SetModeSync3(unsigned short Data);
+		void SetModeIPM(unsigned short Data);
+
+		// Functions of commands for reading data
+		void GetLp(long *Data);
+		void GetRp(unsigned long *Data);
+		void GetCV(unsigned long *Data);
+		void GetCA(unsigned long *Data);
+		void GetCT(unsigned long *Data);
+		void GetMR0(unsigned long *Data);
+		void GetMR1(unsigned long *Data);
+		void GetMR2(unsigned long *Data);
+		void GetMR3(unsigned long *Data);
+		void GetTX(unsigned long *Data);
+		void GetCHLN(unsigned long *Data);
+		void GetHLV(unsigned long *Data);
+		void GetWR1(unsigned long *Data);
+		void GetWR2(unsigned long *Data);
+		void GetWR3(unsigned long *Data);
+		void GetMRM(unsigned long *Data);
+		void GetP1M(unsigned long *Data);
+		void GetP2M(unsigned long *Data);
+		void GetAc(unsigned long *Data );
+		void GetStartSpd(unsigned long *Data );
+		void GetSpeed();
+		void GetPulse(unsigned long *Data );
+		void GetSplit(unsigned long *Data );
+		void GetUI(unsigned long *Data );
+
+		// Driving command functions
+		void ExeDRVRL();
+		void ExeDRVNR();
+		void ExeDRVVP();
+		void ExeDRVVM();
+		void ExeDRVAB();
+		void ExeDRVSBRK();
+		void ExeDRVFBRK();
+		void ExeDIRCP();
+		void ExeDIRCM();
+		void ExeHMSRC();
+
+		// Interpolation command functions
+		void ExeLHK1();
+		void ExeLHK2();
+		void ExeLHK3();
+		void ExeLHK4();
+		void ExeCHKCW();
+		void ExeCHKCCW();
+		void ExeBHK2();
+		void ExeBHK3();
+		void ExeBHK4();
+		void ExeHLCW();
+		void ExeHLCCW();
+		void ExeHLPCW();
+		void ExeHLPCCW();
+		void ExeDECEN();
+		void ExeDECDIS();
+		void ExeCLRSTEP();
+
+		// Synchronous action operation command function
+		void ExeSYNC(unsigned short Cmd);
+
+		// Other Commands functions
+		void ExeVINC();
+		void ExeVDEC();
+		void ExeDCC();
+		void ExeTMSTA();
+		void ExeTMSTP();
+		void ExeSPSTA();
+		void ExeSPSTP();
+		void ExeDHOLD();
+		void ExeDFREE();
+		void ExeR2CLR();
+		void ExeRR3P0();
+		void ExeRR3P1();
+		void ExeNOP();
+		void ExeSRST();
+
+		//-----------------------------------------------------------------------send or read function
+		uint16_t WriteRequest();
+
+		//-----------------------------------------------------------------------Command queue functions
+		int SetDataEnqueue(unsigned short command, unsigned long data);
+
+		int SetModeDataEnqueue(unsigned short command, unsigned short data);
+
+		int GetDataEnqueue(unsigned short command);
+
+		//-----------------------------------------------------------------------Queue functions
+		int SelectSendQueueType();
+
+		mcx514_data_struct SelectSendQueueData(int type);
+
+		void AsyncQueueSaveRequest(mcx514_data_struct cmd);
+
+		void QueueSaveRequest(mcx514_data_struct cmd);
+
+		void QueueDeleteRequest();
+
+		bool IsAsyncRequestQueueEmpty();
+
+		bool IsRequestQueueEmpty();
+
+		//-----------------------------------------------------------------------Process functions
+		bool CheckProcess();
+
+		void InitProcess();
+
+		void SendProcess();
+
+		void RecvProcess();
+
+		void PostProcess();
+
+
+
+
+	//VALUES
+	public:
+
+	private:
+		uint8_t axis_;
+		uint32_t reg_address_;
+		SRAM_HandleTypeDef* hsram_ = NULL;
+
+
+		uint32_t read_data_ = 0;
+
+
+
+		bool is_init_ = false;
+		bool is_run_= false;
+		bool is_err_= false;
+
+		std::vector<mcx514_data_struct> AsyncRequestQueue;
+		std::vector<mcx514_data_struct> RequestQueue;
+
+		uint8_t send_queue_type_;
+
+
+
+
+};
+
+#endif /* MODULE_MCX514_MCX514_H_ */

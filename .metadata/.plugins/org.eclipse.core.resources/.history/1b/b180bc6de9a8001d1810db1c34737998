@@ -1,0 +1,127 @@
+../Core/module/mcx514/src/mcx514_define.cpp:15:5:int WriteReg(volatile short unsigned int*, short unsigned int)	24	static
+../Core/module/mcx514/src/mcx514_define.cpp:24:5:int ReadReg(volatile short unsigned int*, short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:32:5:int SetData(short unsigned int, int, long unsigned int)	32	static
+../Core/module/mcx514/src/mcx514_define.cpp:52:5:int SetModeData(short unsigned int, int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:64:5:int GetData(short unsigned int, int, long unsigned int*)	32	static
+../Core/module/mcx514/src/mcx514_define.cpp:89:5:int ExeCmd(short unsigned int, int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:98:6:void waitdrive(int)	24	static
+../Core/module/mcx514/src/mcx514_define.cpp:109:6:void waitsplit(int)	24	static
+../Core/module/mcx514/src/mcx514_define.cpp:123:5:int WriteReg0(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:126:5:int WriteReg1(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:131:5:int WriteReg2(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:135:5:int WriteReg3(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:139:5:int WriteReg4(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:142:5:int WriteReg5(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:145:5:int WriteReg6(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:148:5:int WriteReg7(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:155:5:int ReadReg0(short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:158:5:int ReadReg1(int, short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:162:5:int ReadReg2(int, short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:166:5:int ReadReg3(int, int, short unsigned int*)	24	static
+../Core/module/mcx514/src/mcx514_define.cpp:176:5:int ReadReg4(short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:179:5:int ReadReg5(short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:182:5:int ReadReg6(short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:185:5:int ReadReg7(short unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:193:5:int SetStartSpd(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:196:5:int SetSpeed(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:199:5:int SetJerk(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:204:5:int SetDJerk(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:207:5:int SetAcc(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:210:5:int SetDec(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:213:5:int SetPulse(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:217:5:int SetDecP(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:220:5:int SetLp(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:223:5:int SetRp(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:226:5:int SetCompP(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:229:5:int SetCompM(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:232:5:int SetAccOfst(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:235:5:int SetHomeSpd(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:238:5:int SetLpMax(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:241:5:int SetRpMax(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:244:5:int SetMR0(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:247:5:int SetMR1(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:250:5:int SetMR2(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:253:5:int SetMR3(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:256:5:int SetSpeedInc(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:259:5:int SetTimer(int, long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:262:5:int SetSplit1(int, short unsigned int, short unsigned int)	24	static
+../Core/module/mcx514/src/mcx514_define.cpp:268:5:int SetSplit2(int, long unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:271:5:int SetTPMax(long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:274:5:int SetHLNumber(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:277:5:int SetHLValue(long int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:285:5:int SetModeMRm(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:288:5:int SetModePIO1(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:291:5:int SetModePIO2(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:294:5:int SetModeHMSrch1(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:297:5:int SetModeHMSrch2(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:300:5:int SetModeFilter(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:303:5:int SetModeSync0(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:306:5:int SetModeSync1(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:309:5:int SetModeSync2(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:312:5:int SetModeSync3(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:315:5:int SetModeIPM(short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:323:5:int GetLp(int, long int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:326:5:int GetRp(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:329:5:int GetCV(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:332:5:int GetCA(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:335:5:int GetCT(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:338:5:int GetMR0(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:341:5:int GetMR1(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:345:5:int GetMR2(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:348:5:int GetMR3(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:351:5:int GetTX(long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:354:5:int GetCHLN(long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:357:5:int GetHLV(long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:361:5:int GetWR1(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:364:5:int GetWR2(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:367:5:int GetWR3(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:370:5:int GetMRM(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:373:5:int GetP1M(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:376:5:int GetP2M(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:379:5:int GetAc(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:382:5:int GetStartSpd(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:385:5:int GetSpeed(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:388:5:int GetPulse(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:391:5:int GetSplit(int, long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:394:5:int GetUI(long unsigned int*)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:402:5:int ExeDRVRL(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:405:5:int ExeDRVNR(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:408:5:int ExeDRVVP(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:411:5:int ExeDRVVM(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:414:5:int ExeDRVAB(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:417:5:int ExeDRVSBRK(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:420:5:int ExeDRVFBRK(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:423:5:int ExeDIRCP(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:426:5:int ExeDIRCM(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:429:5:int ExeHMSRC(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:437:5:int ExeLHK1()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:440:5:int ExeLHK2()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:443:5:int ExeLHK3()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:446:5:int ExeLHK4()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:449:5:int ExeCHKCW()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:452:5:int ExeCHKCCW()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:455:5:int ExeBHK2()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:458:5:int ExeBHK3()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:461:5:int ExeBHK4()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:464:5:int ExeHLCW()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:467:5:int ExeHLCCW()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:470:5:int ExeHLPCW()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:473:5:int ExeHLPCCW()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:476:5:int ExeDECEN()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:479:5:int ExeDECDIS()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:482:5:int ExeCLRSTEP()	8	static
+../Core/module/mcx514/src/mcx514_define.cpp:490:5:int ExeSYNC(int, short unsigned int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:497:5:int ExeVINC(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:500:5:int ExeVDEC(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:503:5:int ExeDCC(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:506:5:int ExeTMSTA(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:509:5:int ExeTMSTP(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:512:5:int ExeSPSTA(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:515:5:int ExeSPSTP(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:518:5:int ExeDHOLD(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:521:5:int ExeDFREE(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:524:5:int ExeR2CLR(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:527:5:int ExeRR3P0(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:530:5:int ExeRR3P1(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:533:5:int ExeNOP(int)	16	static
+../Core/module/mcx514/src/mcx514_define.cpp:536:5:int ExeSRST()	8	static

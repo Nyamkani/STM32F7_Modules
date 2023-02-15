@@ -1,0 +1,66 @@
+/*
+ * mcx514_define.h
+ *
+ *  Created on: Feb 10, 2023
+ *      Author: studio3s
+ */
+
+#ifndef MODULE_MCX514_INCLUDE_MCX514_MCX514_DEFINE_H_
+#define MODULE_MCX514_INCLUDE_MCX514_MCX514_DEFINE_H_
+
+enum mcx514_send_type
+{
+	none = 0,
+	async = 1,
+	sync = 2,
+};
+
+
+
+enum mcx514_axis_define
+{
+	 x_axis = 0x01,
+	 y_axis = 0x02,
+	 z_axis = 0x04,
+	 w_axis = 0x08,
+	 all_axis = 0x0f,
+	 none_axis = 0x00,
+};
+
+
+enum mcx514_request_type
+{
+	set_data_enq = 1,
+	set_mode_data_enq = 2,
+	get_data_enq = 3.
+};
+
+
+typedef struct
+{
+	uint8_t request_type;
+	uint16_t command;
+	uint32_t data;
+}mcx514_data_struct;
+
+
+
+typedef struct
+{
+
+
+}mcx514_motor_data;
+
+typedef struct
+{
+
+
+}mcx514_define_data;
+
+
+
+
+
+
+
+#endif /* MODULE_MCX514_INCLUDE_MCX514_MCX514_DEFINE_H_ */
